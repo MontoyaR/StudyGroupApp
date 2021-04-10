@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity {
 
     EditText username, password;
-    Button login;
+    Button login, signup;
     DBUtil dbUtil;
 
     @Override
@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username1);
         password = (EditText) findViewById(R.id.password1);
         login = (Button) findViewById(R.id.btnLogin1);
+        signup = (Button) findViewById(R.id.btnSignUp3);
         dbUtil = new DBUtil(this);
 
 
@@ -47,6 +48,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
 
+            }
+        });
+
+        // Login functionality
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -60,7 +60,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/password1"
             android:background="#FFFFFF"
+
             android:text="Sign In" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <Button
+            android:id="@+id/btnSignUp3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password1"
+            android:background="#FFFFFF"
+            android:text="Sign Up" />
     </LinearLayout>
 
     <ImageView
