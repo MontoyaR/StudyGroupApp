@@ -10,6 +10,7 @@ public class DBUtil extends SQLiteOpenHelper {
 
     // Variables pertaining to the SQLite Database
     private static final String DATABASE_NAME = "users.db";
+    private static final String DATABASE_NAME2 = "rooms.db";
     private static final int VERSION = 1;
 
     /**
@@ -20,6 +21,7 @@ public class DBUtil extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
+    // User Table
     public static final class UserTable {
         private static final String TABLE = "users";
         private static final String COL_ID = "_id";
@@ -28,18 +30,46 @@ public class DBUtil extends SQLiteOpenHelper {
         private static final String COL_EMAIL = "email";
     }
 
+    // Rooms Table
+    public static final class RoomsTable {
+        private static final String TABLE = "rooms";
+        private static final String COL_ID = "_id";
+        private static final String COL_ACCESS = "access";
+        private static final String COL_PASSWORD = "password";
+        private static final String COL_SUBJECT = "subject";
+        private static final String COL_UNIVERSITY = "university";
+        private static final String COL_PROFESSOR = "professor";
+        private static final String COL_DATE = "date";
+        private static final String COL_DESCRIPTION = "description";
+    }
+
+
+
     /**
-     * The onCreate method will execute a SQL statement to create a table in the database.
+     * The onCreate method will execute a SQL statement to create the tables in the database.
      * @param db — SQLite Database
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + UserTable.TABLE + " (" +
+        String createTable_User = "CREATE TABLE " + UserTable.TABLE + " (" +
                 UserTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 UserTable.COL_USERNAME + " TEXT, " +
                 UserTable.COL_PASSWORD + " TEXT, " +
                 UserTable.COL_EMAIL + " TEXT)";
-        db.execSQL(createTable);
+
+        String createTable_Rooms = "CREATE TABLE " + RoomsTable.TABLE + " (" +
+                RoomsTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                RoomsTable.COL_ACCESS + " INTEGER, " +
+                RoomsTable.COL_PASSWORD + " TEXT, " +
+                RoomsTable.COL_SUBJECT + " TEXT, " +
+                RoomsTable.COL_UNIVERSITY + " TEXT, " +
+                RoomsTable.COL_PROFESSOR + " TEXT, " +
+                RoomsTable.COL_DATE + " TEXT, " +
+                RoomsTable.COL_DESCRIPTION + " TEXT)";
+
+
+        db.execSQL(createTable_User);
+        db.execSQL(createTable_Rooms);
     }
 
     /**
@@ -51,6 +81,7 @@ public class DBUtil extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + UserTable.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RoomsTable.TABLE);
         onCreate(db);
     }
 
@@ -76,6 +107,44 @@ public class DBUtil extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    /**
+     *
+     * @param access
+     * @param password
+     * @param subject
+     * @param university
+     * @param professor
+     * @param description
+     * @return
+     */
+    public boolean insertRoomsData(int access, String password, String subject, String university,
+                                   String professor, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(RoomsTable.COL_ACCESS, access);
+
+        if (access == 0) {
+            System.out.println("No password");
+        } else if (access == 1){
+            contentValues.put(RoomsTable.COL_PASSWORD, password);
+        }
+
+        contentValues.put(RoomsTable.COL_SUBJECT, subject);
+        contentValues.put(RoomsTable.COL_UNIVERSITY, university);
+        contentValues.put(RoomsTable.COL_PROFESSOR, professor);
+        contentValues.put(RoomsTable.COL_DESCRIPTION, description);
+
+        long result = db.insert(RoomsTable.TABLE, null, contentValues);
+
+        if(result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     /**
      * Boolean method, checkUsername, is used to communicate with the SQLite database to retrieve
