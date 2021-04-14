@@ -19,7 +19,7 @@ public class CreateRoom extends AppCompatActivity {
     CalendarView calendarView;
     EditText roomName, password, subject, university, professor, description;
     Switch access;
-    Button save;
+    Button save, cancel;
     String selectedDate, selectedAccess;
 
 
@@ -37,6 +37,7 @@ public class CreateRoom extends AppCompatActivity {
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         access = (Switch) findViewById(R.id.switchAccess);
         save = (Button) findViewById(R.id.btnSave);
+        cancel = (Button) findViewById(R.id.btnCancel);
         dbUtil = new DBUtil(this);
         selectedAccess = "public";
 
@@ -61,6 +62,20 @@ public class CreateRoom extends AppCompatActivity {
             }
         });
 
+        /**
+         * This method sets an onClick listener to the cancel button to change screens.
+         */
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(intent);
+            }
+        });
+
+        /**
+         *
+         */
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

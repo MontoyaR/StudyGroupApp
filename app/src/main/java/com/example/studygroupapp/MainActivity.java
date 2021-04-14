@@ -76,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Login functionality
+        /**
+         * This method sets an onClick listener to the signin button to change screens.
+         */
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

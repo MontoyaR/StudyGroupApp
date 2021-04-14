@@ -43,8 +43,6 @@ public class DBUtil extends SQLiteOpenHelper {
         private static final String COL_DESCRIPTION = "description";
     }
 
-
-
     /**
      * The onCreate method will execute a SQL statement to create the tables in the database.
      * @param db — SQLite Database
@@ -141,6 +139,18 @@ public class DBUtil extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Cursor viewRooms() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + RoomsTable.TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+
+        return cursor;
     }
 
 
