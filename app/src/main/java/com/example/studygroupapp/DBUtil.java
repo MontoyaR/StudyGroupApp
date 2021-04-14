@@ -9,8 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBUtil extends SQLiteOpenHelper {
 
     // Variables pertaining to the SQLite Database
-    private static final String DATABASE_NAME = "users.db";
-    private static final String DATABASE_NAME2 = "rooms.db";
+    private static final String DATABASE_NAME = "appData.db";
     private static final int VERSION = 1;
 
     /**
@@ -35,6 +34,7 @@ public class DBUtil extends SQLiteOpenHelper {
         private static final String TABLE = "rooms";
         private static final String COL_ID = "_id";
         private static final String COL_ACCESS = "access";
+        private static final String COL_NAME = "name";
         private static final String COL_PASSWORD = "password";
         private static final String COL_SUBJECT = "subject";
         private static final String COL_UNIVERSITY = "university";
@@ -59,14 +59,14 @@ public class DBUtil extends SQLiteOpenHelper {
 
         String createTable_Rooms = "CREATE TABLE " + RoomsTable.TABLE + " (" +
                 RoomsTable.COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                RoomsTable.COL_ACCESS + " INTEGER, " +
+                RoomsTable.COL_ACCESS + " TEXT, " +
+                RoomsTable.COL_NAME + " TEXT, " +
                 RoomsTable.COL_PASSWORD + " TEXT, " +
                 RoomsTable.COL_SUBJECT + " TEXT, " +
                 RoomsTable.COL_UNIVERSITY + " TEXT, " +
                 RoomsTable.COL_PROFESSOR + " TEXT, " +
                 RoomsTable.COL_DATE + " TEXT, " +
                 RoomsTable.COL_DESCRIPTION + " TEXT)";
-
 
         db.execSQL(createTable_User);
         db.execSQL(createTable_Rooms);
@@ -110,31 +110,29 @@ public class DBUtil extends SQLiteOpenHelper {
 
     /**
      *
+     * @param roomName
      * @param access
      * @param password
      * @param subject
      * @param university
      * @param professor
      * @param description
+     * @param date
      * @return
      */
-    public boolean insertRoomsData(int access, String password, String subject, String university,
-                                   String professor, String description) {
+    public Boolean insertRoomData(String roomName, String access, String password, String subject, String university,
+                                  String professor, String description, String date) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
+        contentValues.put(RoomsTable.COL_NAME, roomName);
         contentValues.put(RoomsTable.COL_ACCESS, access);
-
-        if (access == 0) {
-            System.out.println("No password");
-        } else if (access == 1){
-            contentValues.put(RoomsTable.COL_PASSWORD, password);
-        }
-
+        contentValues.put(RoomsTable.COL_PASSWORD, password);
         contentValues.put(RoomsTable.COL_SUBJECT, subject);
         contentValues.put(RoomsTable.COL_UNIVERSITY, university);
         contentValues.put(RoomsTable.COL_PROFESSOR, professor);
         contentValues.put(RoomsTable.COL_DESCRIPTION, description);
+        contentValues.put(RoomsTable.COL_DATE, date);
 
         long result = db.insert(RoomsTable.TABLE, null, contentValues);
 

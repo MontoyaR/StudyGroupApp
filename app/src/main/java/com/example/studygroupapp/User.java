@@ -2,6 +2,13 @@ package com.example.studygroupapp;
 
 public class User {
 
+    public User(String id, String username, String password, String email) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     private String id;
     private String username;
     private String password;
