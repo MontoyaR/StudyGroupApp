@@ -41,14 +41,21 @@ public class CreateRoom extends AppCompatActivity {
         dbUtil = new DBUtil(this);
         selectedAccess = "public";
 
+        /**
+         *
+         */
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                selectedDate = Integer.toString(year) + Integer.toString(month) + Integer.toString(dayOfMonth);
+                selectedDate =  Integer.toString(month) + "/" + Integer.toString(dayOfMonth)
+                        + "/" + Integer.toString(year);
                 System.out.println(selectedDate);
             }
         });
 
+        /**
+         *
+         */
         access.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -92,6 +99,8 @@ public class CreateRoom extends AppCompatActivity {
                 if (name.isEmpty() || locked.isEmpty() || _subject.isEmpty()
                         || _university.isEmpty() || _professor.isEmpty() || _description.isEmpty() || date.isEmpty()) {
                     Toast.makeText(CreateRoom.this, "Please fill out all the fields.", Toast.LENGTH_SHORT).show();
+                } if (_password.isEmpty() && locked.equals("private")) {
+                    Toast.makeText(CreateRoom.this, "Please check the password and locked fields.", Toast.LENGTH_SHORT).show();
                 } else {
                     Boolean insert = dbUtil.insertRoomData(name, locked, _password, _subject, _university, _professor,
                             _description, date);

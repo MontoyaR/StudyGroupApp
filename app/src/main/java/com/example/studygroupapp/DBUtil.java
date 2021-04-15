@@ -145,9 +145,9 @@ public class DBUtil extends SQLiteOpenHelper {
      *
      * @return
      */
-    public Cursor viewRooms() {
+    public Cursor viewPublicRooms() {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + RoomsTable.TABLE;
+        String query = "SELECT * FROM " + RoomsTable.TABLE + " WHERE access='public'";
         Cursor cursor = db.rawQuery(query, null);
 
         return cursor;

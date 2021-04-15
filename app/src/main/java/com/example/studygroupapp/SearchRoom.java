@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * The SearchRoom class will be used to
+ */
 public class SearchRoom extends AppCompatActivity {
 
+    //
     DBUtil dbUtil;
     ListView rooms;
     ArrayList<String> listRoom;
@@ -36,6 +39,9 @@ public class SearchRoom extends AppCompatActivity {
 
         viewData();
 
+        /**
+         *
+         */
         rooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -44,6 +50,9 @@ public class SearchRoom extends AppCompatActivity {
             }
         });
 
+        /**
+         *
+         */
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,8 +63,11 @@ public class SearchRoom extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     */
     private void viewData() {
-        Cursor cursor = dbUtil.viewRooms();
+        Cursor cursor = dbUtil.viewPublicRooms();
 
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "No data to show." , Toast.LENGTH_SHORT).show();
